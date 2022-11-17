@@ -5,14 +5,17 @@ import CommonButton from '../Common/CommonButton';
 import { useNavigation } from '@react-navigation/native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Loader from '../Common/Loader';
 
 const LoginScreen = () => {
-  
+  const useNavigationa = useNavigation();  
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
   
    const [erroremail, seterrorEmail] = useState(false);
    const [errorpassword, seterrorPassword] = useState(false);
+
+   const [modalVisible,setmodalVisible] = useState(false);
 
    let pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
@@ -20,6 +23,7 @@ const LoginScreen = () => {
   const validate = (()=>{
     if(email.length==0)
     {
+      setmodalVisible(false);
       isvalid= false;
       seterrorEmail(true);
     }
@@ -27,6 +31,7 @@ const LoginScreen = () => {
     {
       if(pattern.test(String(email).toLowerCase()))
       {
+        setmodalVisible(false);
         seterrorEmail(false);
       }
       else
@@ -38,6 +43,7 @@ const LoginScreen = () => {
     }
      if(password.length==0)
     {
+      setmodalVisible(false);
       isvalid= false;
       seterrorPassword(true);
     }
@@ -50,20 +56,34 @@ const LoginScreen = () => {
   
   const storeData = async () => {
 
-      let getEmail =  await AsyncStorage.setItem("email");
-      let getPassword=  await AsyncStorage.setItem("password");
-    
+
+      let getEmail =  await AsyncStorage.getItem("email");
+      let getPassword=  await AsyncStorage.getItem("password");
+    //  console.log(getPassword);
       if(getEmail!=email)
       {
+        setmodalVisible(false);
         seterrorEmail(true);
       }
       if(getPassword!=password)
       {
+        setmodalVisible(false);
         seterrorPassword(true);
+      }
+      else
+      {
+        seterrorEmail(false);
+        seterrorPassword(false);
+
+        setmodalVisible(false);
+        //console.log(getPassword);
+        setmodalVisible(true);
+        useNavigationa.navigate('Home');
+        
       }
     }
  
-  const useNavigationa = useNavigation();
+
   return (
     <View style={{ flex: 1 }}>
       <Image source={require('../images/playstore.png')}
@@ -118,6 +138,8 @@ const LoginScreen = () => {
 
           color: '#000'
         }}>Create New Account ?</Text>
+        <Loader modalVisible={modalVisible} />
+      
     </View>
   )
 }

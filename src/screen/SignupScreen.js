@@ -6,8 +6,10 @@ import { useNavigation } from '@react-navigation/native'
 import { ScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import Loader from '../Common/Loader';
 
 const SignupScreen = () => {
+    const [modalVisible,setmodalVisible] = useState(false);
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -34,6 +36,7 @@ const SignupScreen = () => {
 
         if (name.length == 0) {
             isvalid= false;
+            setmodalVisible(false);
             setErrorName(true);
         }
         else {
@@ -41,6 +44,7 @@ const SignupScreen = () => {
         }
 
         if (email.length == 0) {
+            setmodalVisible(false);
             isvalid= false;
             setErrorEmail(true);
         }
@@ -50,6 +54,7 @@ const SignupScreen = () => {
             }
             else {
                 isvalid= false;
+                setmodalVisible(false);
                 setErrorEmail(true);
             }
         }
@@ -58,10 +63,12 @@ const SignupScreen = () => {
         {
             isvalid= false;
             setErrorMobile(true);
+            setmodalVisible(false);
             setErrorMobilenum("Please Enter Mobile Number");
         }
         else if((mobile.length>10) || (mobile.length<10))
         {
+            setmodalVisible(false);
             isvalid= false;
             setErrorMobilenum("Please Enter 10 Digit Mobile Number");
             setErrorMobile(true);
@@ -73,6 +80,7 @@ const SignupScreen = () => {
 
         // password 
         if (password.length == 0) {
+            setmodalVisible(false);
             isvalid= false;
             setErrorPassword(true);
         }
@@ -83,12 +91,14 @@ const SignupScreen = () => {
         //confirmPassword
         if(confirmPassword.length==0)
         {
+            setmodalVisible(false);
             isvalid= false;
             setErrorConfirmPassword(true);
             seterrCongirmPassword("Please Enter Confirm Password");
         }
         else if(password!=confirmPassword)
         {
+            setmodalVisible(false);
             isvalid= false;
             setErrorConfirmPassword(true);
             seterrCongirmPassword("Password And Confirm Password Not Match");
@@ -104,6 +114,7 @@ const SignupScreen = () => {
     const storeData = async () => {
         if((!errorName && !errorEmail && !errorMobile && !errorPassword && !errorConfirmPassword))
         {
+            setmodalVisible(true);
             await AsyncStorage.setItem("name",name);
             await AsyncStorage.setItem("email",email);
             await AsyncStorage.setItem("mobileNumber",mobile);
@@ -189,6 +200,8 @@ const SignupScreen = () => {
                         marginBottom: 50,
                         color: '#000'
                     }}>Already Have Account ?</Text>
+                    <Loader modalVisible={modalVisible} />
+  
             </View>
         </ScrollView>
     )
