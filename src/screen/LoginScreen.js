@@ -135,11 +135,9 @@ const LoginScreen = () => {
           fontSize: 18,
           fontWeight: '900',
           textDecorationLine: 'underline',
-
-          color: '#000'
+        color: '#000'
         }}>Create New Account ?</Text>
         <Loader modalVisible={modalVisible} />
-      
     </View>
   )
 }

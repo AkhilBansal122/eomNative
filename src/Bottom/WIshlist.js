@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const WIshlist = () => {
+const Wishlist = () => {
   return (
  
     <View style={{flex:1,justifyContent:'center',alignItems:'center',alignContent:'center'}}>
@@ -10,6 +10,6 @@ const WIshlist = () => {
   )
 }
 
-export default WIshlist
+export default Wishlist
 
 const styles = StyleSheet.create({})

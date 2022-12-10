@@ -13,17 +13,18 @@ import HomeScreen from './screen/HomeScreen';
   const Stack = createNativeStackNavigator();
 const AppNavigator = () => {
   return (
-    <NavigationContainer >
-    <Stack.Navigator>
-    <Stack.Screen name="Splesh" component={SpleshScreen}  options={{ 
-      headerShown:false,
-      statusBarHidden:false
-       }} />
-        
+    <NavigationContainer>
+    <Stack.Navigator initialRouteName='Home'>
+   
     <Stack.Screen name="Home" component={HomeScreen}  options={{ 
         headerShown:false,
         title: 'Home Screen' }} />
 
+        <Stack.Screen name="Splesh" component={SpleshScreen}  options={{ 
+          headerShown:false,
+          statusBarHidden:false
+           }} />
+            
       <Stack.Screen name="Login" component={LoginScreen} options={{ 
         headerShown:false,
         statusBarHidden:false

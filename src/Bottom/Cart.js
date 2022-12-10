@@ -1,14 +1,50 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react' 
+import React, {useState} from 'react';
+import {View, Button, Platform, SafeAreaView , StyleSheet} from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const Cart = () => {
+
+    const [mydate, setDate] = useState(new Date());
+    const [displaymode, setMode] = useState('date');
+    const [isDisplayDate, setShow] = useState(false);
+    const changeSelectedDate = (event, selectedDate) => {
+    const currentDate = selectedDate || mydate;
+    setDate(currentDate);
+ };
+ const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+ };
+ const displayDatepicker = () => {
+    showMode('date');
+ };
+
+ 
   return (
-    <View  style={{flex:1,justifyContent:'center',alignItems:'center',alignContent:'center'}}>
-      <Text>Cart</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+    <View>
+       <Button onPress={displayDatepicker} title="Show date picker!" />
+          </View>
+             {isDisplayDate && (
+                <DateTimePicker
+                   testID="dateTimePicker"
+                   value={mydate}
+                   mode={displaymode}
+                   is24Hour={true}
+                   display="default"
+                   onChange={changeSelectedDate}
+          />
+       )}
+    </SafeAreaView>
   )
-} 
+}
 
 export default Cart
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container: {
+       flex: 1,
+       alignItems: "center",
+       justifyContent: "center"
+    },
+ });
