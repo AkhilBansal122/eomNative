@@ -6,22 +6,25 @@ import Main from '../Bottom/Main';
 import Profile from '../Bottom/Profile';
 import Search from '../Bottom/Search';
 import Wishlist from '../Bottom/WIshlist';
+import { useSelector } from 'react-redux';
 
 const HomeScreen = () => {
 
   const [selectTab, setSelectTab] = useState(0);
 
+  const data = useSelector(state=>state);
+  
   return (
     <View style={{ flex: 1 }}>
       {
         selectTab ==0 ? 
         (<Main/>) : 
         selectTab==1  ? 
-        <Wishlist/> : 
+        <Search/> : 
         selectTab==2 ? 
         <Cart/>   : 
         selectTab==3 ?  
-        <Search/> 
+        <Wishlist/> 
         :<Profile/> 
       }
       <View style={{ flex: 1, bottom: 0, position: 'absolute', justifyContent: 'space-evenly' }}>
@@ -44,7 +47,8 @@ const HomeScreen = () => {
               }
             }>
             <Image source={require('../images/home.png')} style={{ width: 24, height: 25,tintColor:selectTab==0 ?'#8e8e8e':'#8e8e8e' }} />
-          </TouchableOpacity>
+              
+            </TouchableOpacity>
 
           <TouchableOpacity
             onPress={() => {
@@ -61,7 +65,7 @@ const HomeScreen = () => {
                 
                }
             }>
-            <Image source={require('../images/heart.png')} style={{ width: 24, height: 25,tintColor:selectTab==1 ?'#8e8e8e':'#8e8e8e' }} />
+            <Image source={require('../images/search.png')} style={{ width: 24, height: 25,tintColor:selectTab==1 ?'#8e8e8e':'#8e8e8e' }} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
             setSelectTab(2);
@@ -78,7 +82,22 @@ const HomeScreen = () => {
             }
           }>
             <Image source={require('../images/cart.png')} style={{ width: 24, height: 30, tintColor:selectTab==2 ?'#fff':'#8e8e8e' }} />
-
+            <View 
+            style={{
+              width:20,
+              height:20,
+              backgroundColor:'red',
+              borderRadius: 10,
+              justifyContent: 'center',
+              alignItems: 'center',
+              position: 'absolute',
+              top: 5,
+              right: 5,
+            }}>
+            <Text style={{color: '#000', fontWeight: '600'}}>
+              {data.Reducers.length}
+            </Text>
+            </View>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => {
@@ -93,7 +112,23 @@ const HomeScreen = () => {
 
             }
           }>
-            <Image source={require('../images/search.png')} style={{ width: 24, height: 25,tintColor:selectTab==3 ?'#8e8e8e':'#8e8e8e' }} />
+          <View
+            style={{
+              width: 20,
+              height: 20,
+              backgroundColor: 'red',
+              borderRadius: 10,
+              justifyContent: 'center',
+              alignItems: 'center',
+              position: 'absolute',
+              top: 15,
+              right: 20,
+            }}>
+            <Text style={{color: '#fff', fontWeight: '600'}}>
+              {data.ReducersWishlist.length}
+            </Text>
+          </View>
+            <Image source={require('../images/heart.png')} style={{ width: 24, height: 25,tintColor:selectTab==3 ?'#8e8e8e':'#8e8e8e' }} />
           </TouchableOpacity>
 
           <TouchableOpacity

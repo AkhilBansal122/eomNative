@@ -1,15 +1,35 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { View, Text, FlatList } from 'react-native'
+import React,{useState} from 'react'
+import {useDispatch, useSelector} from 'react-redux';
+import CartItem from '../Common/CartItem';
+import { addItemToCart, removeItemToCart,removeItemToWishlist } from '../redux/actions/Actions';
+const WIshlist = () => {
+  const [cartList, setCartList] = useState([]);
 
-const Wishlist = () => {
+  const cartData =  useSelector(state =>state.ReducersWishlist);
+  const dispatch = useDispatch();
+//console.log("@@@",cartData);
   return (
- 
-    <View style={{flex:1,justifyContent:'center',alignItems:'center',alignContent:'center'}}>
-      <Text>WIshlist</Text>
+    <View style={{flex: 1}}>
+     <FlatList
+      data = {cartData}
+      renderItem = {({item,index})=>{
+        return(
+          <CartItem
+            item={item}
+            isWishlist = {"ss"}
+            onRemoveFromWishlist = {()=>{
+              dispatch(removeItemToWishlist(index));
+            }}
+            onAddToCart={x=>{
+              dispatch(addItemToCart(item));
+            }}
+          />
+        )
+      }}
+        />
     </View>
   )
 }
 
-export default Wishlist
-
-const styles = StyleSheet.create({})
+export default WIshlist

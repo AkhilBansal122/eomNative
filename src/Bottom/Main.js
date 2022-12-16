@@ -6,9 +6,11 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { products } from '../Products';
 
 import ProductItem from '../Common/ProductItem';
-
+import { useDispatch,useSelector } from 'react-redux';
+import {addItemToCart, addItemToWishlist} from '../redux/actions/Actions';
 const Main = () => {
 
+  const dispatch = useDispatch();
   const [categorieslist, setCategorylist] = useState([]);
   const [tshirtList, setTshirtList] = useState([]);
   const [shoesList, setShoesLits] = useState([]);
@@ -18,6 +20,7 @@ const Main = () => {
   const [slipperList, setSlipperList] = useState([]);
   const [jacketLits, setJacketList] = useState([]);
 
+  
   useEffect(() => {
     let categories = [];
     products.category.map(item => {
@@ -34,6 +37,8 @@ const Main = () => {
     setCategorylist(categories);
   }, []);
 
+  //   const items = useSelector(state => state);
+  // console.log(items); 
   const renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity style={{
@@ -87,7 +92,15 @@ const Main = () => {
             renderItem={({ item, index }) => {
 
               return (
-                <ProductItem item={item} />
+                <ProductItem item={item} 
+
+                onAddWishlist={x => {
+                  dispatch(addItemToWishlist(x));
+                }}
+
+                onAddToCart={z => {
+                  dispatch(addItemToCart(item));
+                }} />
               )
             }}
           />
@@ -108,7 +121,15 @@ const Main = () => {
             renderItem={({ item, index }) => {
 
               return (
-                <ProductItem item={item} />
+                <ProductItem item={item}
+                
+                onAddWishlist={x => {
+                  dispatch(addItemToWishlist(x));
+                }}
+
+                onAddToCart={z => {
+                  dispatch(addItemToCart(item));
+                }}/>
               )
             }}
           />
@@ -129,7 +150,15 @@ const Main = () => {
             renderItem={({ item, index }) => {
 
               return (
-                <ProductItem item={item} />
+                <ProductItem item={item} 
+                onAddWishlist={x => {
+                  dispatch(addItemToWishlist(x));
+                }}
+
+                onAddToCart={z => {
+                  dispatch(addItemToCart(item));
+                }}
+                />
               )
             }}
           />
@@ -150,7 +179,13 @@ const Main = () => {
             renderItem={({ item, index }) => {
 
               return (
-                <ProductItem item={item} />
+                <ProductItem item={item}  onAddWishlist={x => {
+                  dispatch(addItemToWishlist(x));
+                }}
+
+                onAddToCart={z => {
+                  dispatch(addItemToCart(item));
+                }} />
               )
             }}
           />
@@ -171,7 +206,14 @@ const Main = () => {
             renderItem={({ item, index }) => {
 
               return (
-                <ProductItem item={item} />
+                <ProductItem item={item}  
+                onAddWishlist={x => {
+                  dispatch(addItemToWishlist(x));
+                }}
+
+                onAddToCart={z => {
+                  dispatch(addItemToCart(item));
+                }} />
               )
             }}
           />

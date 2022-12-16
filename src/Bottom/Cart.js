@@ -1,50 +1,55 @@
-import React, {useState} from 'react';
-import {View, Button, Platform, SafeAreaView , StyleSheet} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import React, { useState } from 'react'
+import Header from '../Common/Header'
+import { useSelector, useDispatch } from 'react-redux';
+
+import { addToWishlist, removeFromCart } from '../redux/actions/Actions';
+
+import { useNavigation } from '@react-navigation/native';
+import CartItem from '../Common/CartItem';
+import CommonButton from "../Common/CommonButton";
+import { FlatList } from 'react-native-gesture-handler';
+import { removeItemToCart, addItemToWishlist } from '../redux/actions/Actions';
 
 const Cart = () => {
 
-    const [mydate, setDate] = useState(new Date());
-    const [displaymode, setMode] = useState('date');
-    const [isDisplayDate, setShow] = useState(false);
-    const changeSelectedDate = (event, selectedDate) => {
-    const currentDate = selectedDate || mydate;
-    setDate(currentDate);
- };
- const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
- };
- const displayDatepicker = () => {
-    showMode('date');
- };
+   const cartData = useSelector(state => state.Reducers);
+   const [cartList, setCartList] = useState([]);
+   const dispatch = useDispatch();
+   const navigation = useNavigation();
 
- 
-  return (
-    <SafeAreaView style={styles.container}>
-    <View>
-       <Button onPress={displayDatepicker} title="Show date picker!" />
-          </View>
-             {isDisplayDate && (
-                <DateTimePicker
-                   testID="dateTimePicker"
-                   value={mydate}
-                   mode={displaymode}
-                   is24Hour={true}
-                   display="default"
-                   onChange={changeSelectedDate}
-          />
-       )}
-    </SafeAreaView>
-  )
+   return (
+      <View style={{ flex: 1 }}>
+         {
+            cartData.length > 0 ? (
+               <FlatList
+                  data={cartData}
+          
+                  renderItem={({ item, index }) => {
+                     return (
+                        <CartItem
+                           onAddWishlist={x => {
+                              dispatch(addItemToWishlist(item));
+                           }}
+
+                           item={item}
+
+                           onRemoveItem={() => {
+                              dispatch(removeItemToCart(index));
+                           }}
+                        />
+                     );
+                  }}
+               />
+            ) : (
+               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                  <Text>No Items Added in Cart</Text>
+               </View>
+            )}
+      </View>
+   )
 }
 
 export default Cart
 
-const styles = StyleSheet.create({
-    container: {
-       flex: 1,
-       alignItems: "center",
-       justifyContent: "center"
-    },
- });
+const styles = StyleSheet.create({})
