@@ -42,12 +42,18 @@ const Cart = () => {
                   }}
                />
             ) : (
+               
                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                   <Text>No Items Added in Cart</Text>
-               </View>
+                  
+                  </View>
+               
             )}
+
+                       
       </View>
-   )
+
+      )
 }
 
 export default Cart

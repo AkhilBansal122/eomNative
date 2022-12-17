@@ -8,7 +8,8 @@ import LoginScreen from './screen/LoginScreen';
 import SignupScreen from './screen/SignupScreen';
 import HomeScreen from './screen/HomeScreen';
 
-
+import MyAddress from './screen/MyAddress';
+import AddAddress from './screen/AddAddress';
   
   const Stack = createNativeStackNavigator();
 const AppNavigator = () => {
@@ -33,6 +34,14 @@ const AppNavigator = () => {
           headerShown:false,
           statusBarHidden:false
            }} />
+           <Stack.Screen name="MyAddress" component={MyAddress} options={{ 
+            headerShown:false,
+            statusBarHidden:false
+             }} />
+             <Stack.Screen name="AddAddress" component={AddAddress} options={{ 
+              headerShown:false,
+              statusBarHidden:false
+               }} />
     </Stack.Navigator>
   </NavigationContainer>
   )

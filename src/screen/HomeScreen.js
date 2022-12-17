@@ -25,7 +25,9 @@ const HomeScreen = () => {
         <Cart/>   : 
         selectTab==3 ?  
         <Wishlist/> 
-        :<Profile/> 
+        :selectTab==4 ?
+        <Profile/>
+        :null 
       }
       <View style={{ flex: 1, bottom: 0, position: 'absolute', justifyContent: 'space-evenly' }}>
         <View style={{
@@ -47,7 +49,6 @@ const HomeScreen = () => {
               }
             }>
             <Image source={require('../images/home.png')} style={{ width: 24, height: 25,tintColor:selectTab==0 ?'#8e8e8e':'#8e8e8e' }} />
-              
             </TouchableOpacity>
 
           <TouchableOpacity
